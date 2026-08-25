@@ -1,0 +1,6322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<link rel="icon" type="ico" href="cloud.ico">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>落 · 主页</title>
+
+<style>
+
+/* =========================================================
+   基础
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+
+  margin:0;
+
+  width:100%;
+  height:100%;
+
+  overflow:hidden;
+
+}
+
+body{
+
+  font-family:
+    "Segoe UI",
+    "Microsoft YaHei",
+    sans-serif;
+
+  color:#fff;
+
+  background:#080d18;
+
+}
+
+
+/* =========================================================
+   背景
+========================================================= */
+
+#bg{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-5;
+
+  background:
+    center/cover no-repeat;
+
+  transition:
+    filter .35s,
+    transform .35s,
+    opacity .35s;
+
+}
+
+
+#shade{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-4;
+
+  pointer-events:none;
+
+  background:
+    rgba(5,8,18,.35);
+
+  transition:
+    background .3s;
+
+}
+
+
+#noise{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-3;
+
+  pointer-events:none;
+
+  opacity:.35;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      transparent 15%,
+      rgba(0,0,0,.30) 100%
+    );
+
+}
+
+
+/* =========================================================
+   鸿蒙全局光晕
+========================================================= */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:-20%;
+
+  z-index:-2;
+
+  pointer-events:none;
+
+  background:
+
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(90,190,255,.08),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(150,100,255,.06),
+      transparent 30%
+    );
+
+  animation:
+    ambientGlow 10s ease-in-out infinite alternate;
+
+}
+
+
+@keyframes ambientGlow{
+
+  from{
+    transform:scale(.96);
+  }
+
+  to{
+    transform:scale(1.04);
+  }
+
+}
+
+
+/* =========================================================
+   玻璃通用
+========================================================= */
+
+.glass{
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.105),
+      rgba(10,15,27,.38)
+    );
+
+  backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 20px 60px
+    rgba(0,0,0,.25),
+
+    inset 0 1px 0
+    rgba(255,255,255,.10);
+
+}
+
+
+/* =========================================================
+   侧边栏
+========================================================= */
+
+.sidebar{
+
+  position:fixed;
+
+  left:20px;
+  top:20px;
+  bottom:20px;
+
+  width:255px;
+
+  padding:
+    20px 15px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.16);
+
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,25,43,.62),
+      rgba(7,12,23,.40)
+    );
+
+  backdrop-filter:
+    blur(30px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(30px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 25px 80px
+    rgba(0,0,0,.34),
+
+    inset 0 1px 0
+    rgba(255,255,255,.12);
+
+  overflow:auto;
+
+  scrollbar-width:none;
+
+  z-index:10;
+
+}
+
+
+.sidebar::-webkit-scrollbar{
+  display:none;
+}
+
+
+/*
+ * 玻璃边缘光
+ */
+
+.sidebar::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:15%;
+  right:15%;
+  top:-1px;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(160,225,255,.65),
+      transparent
+    );
+
+  opacity:.7;
+
+}
+
+
+/* =========================================================
+   Logo
+========================================================= */
+
+.brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:
+    3px 10px 20px;
+
+}
+
+
+.logo{
+
+  width:44px;
+  height:44px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120,210,255,.28),
+      rgba(60,120,180,.16)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.25);
+
+  box-shadow:
+
+    inset 0 1px 0
+    rgba(255,255,255,.2),
+
+    0 0 25px
+    rgba(80,190,255,.10);
+
+  font-size:21px;
+
+  font-weight:800;
+
+}
+
+
+.brand b{
+
+  display:block;
+
+  font-size:20px;
+
+  letter-spacing:4px;
+
+}
+
+
+.brand small{
+
+  display:block;
+
+  color:#9da8ba;
+
+  font-size:9px;
+
+  margin-top:2px;
+
+  letter-spacing:1px;
+
+}
+
+
+/* =========================================================
+   菜单
+========================================================= */
+
+.menu-title{
+
+  font-size:10px;
+
+  color:#8d99ad;
+
+  padding:
+    9px 10px 7px;
+
+  text-transform:uppercase;
+
+  letter-spacing:2px;
+
+}
+
+
+.menu a{
+
+  position:relative;
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:
+    11px 13px;
+
+  margin:4px 0;
+
+  color:#dce3ef;
+
+  text-decoration:none;
+
+  border-radius:14px;
+
+  font-size:14px;
+
+  border:
+    1px solid
+    transparent;
+
+  transition:
+    transform .2s,
+    background .2s,
+    box-shadow .2s,
+    border-color .2s;
+
+}
+
+
+.menu a::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:-120%;
+
+  top:0;
+
+  width:65%;
+
+  height:100%;
+
+  transform:
+    skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.15),
+      transparent
+    );
+
+  transition:
+    left .55s;
+
+}
+
+
+.menu a:hover::before{
+
+  left:140%;
+
+}
+
+
+.menu a:hover,
+.menu a.active{
+
+  transform:
+    translateX(3px);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(90,190,255,.18),
+      rgba(90,190,255,.06)
+    );
+
+  border-color:
+    rgba(130,210,255,.12);
+
+  box-shadow:
+    0 0 25px
+    rgba(80,190,255,.08);
+
+  color:#fff;
+
+}
+
+
+.menu .ico{
+
+  width:30px;
+  min-width:30px;
+
+  height:30px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:9px;
+
+  background:
+    rgba(255,255,255,.07);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  overflow:hidden;
+
+}
+
+
+.menu .ico img{
+
+  width:21px;
+  height:21px;
+
+  object-fit:contain;
+
+  border-radius:5px;
+
+}
+
+
+/* =========================================================
+   左侧按钮
+========================================================= */
+
+.custom-actions{
+
+  display:flex;
+
+  gap:7px;
+
+  margin:
+    8px 0 6px;
+
+}
+
+
+.custom-actions button,
+.bg-btn{
+
+  position:relative;
+
+  overflow:hidden;
+
+  width:100%;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  background:
+    rgba(255,255,255,.055);
+
+  color:#dce5f2;
+
+  border-radius:12px;
+
+  padding:10px;
+
+  cursor:pointer;
+
+  font-size:11px;
+
+  transition:
+    .2s;
+
+}
+
+
+.custom-actions button:hover,
+.bg-btn:hover{
+
+  background:
+    rgba(90,190,255,.15);
+
+  border-color:
+    rgba(120,210,255,.20);
+
+  box-shadow:
+    0 0 25px
+    rgba(80,190,255,.08);
+
+}
+
+
+.custom-item{
+
+  position:relative;
+
+}
+
+
+.custom-item .edit{
+
+  display:none;
+
+  position:absolute;
+
+  right:8px;
+  top:8px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.1);
+
+  background:
+    rgba(0,0,0,.35);
+
+  color:#fff;
+
+  border-radius:8px;
+
+  padding:
+    4px 7px;
+
+  cursor:pointer;
+
+}
+
+
+.custom-item:hover .edit{
+
+  display:block;
+
+}
+
+
+.side-bottom{
+
+  margin-top:15px;
+
+  padding:12px;
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.045);
+
+  color:#9faabd;
+
+  font-size:10px;
+
+  line-height:1.7;
+
+}
+
+
+/* =========================================================
+   主区域
+========================================================= */
+
+main{
+
+  height:100%;
+
+  margin-left:295px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:30px;
+
+}
+
+
+.center{
+
+  width:
+    min(850px,100%);
+
+  text-align:center;
+
+  margin-top:-4vh;
+
+}
+
+
+/* =========================================================
+   时间
+========================================================= */
+
+.clock-main{
+
+  text-align:center;
+
+  margin:
+    0 0 20px;
+
+}
+
+
+.clock-time{
+
+  font-size:
+    clamp(42px,5vw,66px);
+
+  font-weight:600;
+
+  letter-spacing:2px;
+
+  line-height:1;
+
+  text-shadow:
+    0 8px 35px
+    rgba(0,0,0,.40);
+
+}
+
+
+.clock-date{
+
+  font-size:12px;
+
+  color:
+    rgba(255,255,255,.68);
+
+  margin-top:9px;
+
+}
+
+
+/* =========================================================
+   搜索
+========================================================= */
+
+.search{
+
+  position:relative;
+
+}
+
+
+.search input{
+
+  width:100%;
+
+  height:68px;
+
+  padding:
+    0 70px 0 25px;
+
+  border-radius:23px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.18);
+
+  outline:none;
+
+  background:
+    rgba(10,15,27,.42);
+
+  backdrop-filter:
+    blur(25px)
+    saturate(150%);
+
+  color:#fff;
+
+  font-size:17px;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,.28),
+
+    inset 0 1px 0
+    rgba(255,255,255,.10);
+
+  transition:.25s;
+
+}
+
+
+.search input::placeholder{
+
+  color:
+    rgba(255,255,255,.52);
+
+}
+
+
+.search input:focus{
+
+  border-color:
+    rgba(120,210,255,.48);
+
+  box-shadow:
+
+    0 0 0 4px
+    rgba(100,200,255,.08),
+
+    0 20px 60px
+    rgba(0,0,0,.30),
+
+    0 0 40px
+    rgba(80,190,255,.10);
+
+}
+
+
+.search button{
+
+  position:absolute;
+
+  right:8px;
+  top:8px;
+
+  width:52px;
+  height:52px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
+  border-radius:17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120,210,255,.30),
+      rgba(80,140,220,.20)
+    );
+
+  color:#fff;
+
+  font-size:23px;
+
+  cursor:pointer;
+
+  transition:.18s;
+
+}
+
+
+.search button:hover{
+
+  transform:
+    scale(1.04);
+
+  box-shadow:
+    0 0 25px
+    rgba(90,200,255,.20);
+
+}
+
+
+/* =========================================================
+   小组件
+========================================================= */
+
+.widgets{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:12px;
+
+  flex-wrap:wrap;
+
+  margin-top:28px;
+
+}
+
+
+.widget{
+
+  position:relative;
+
+  min-width:205px;
+
+  max-width:280px;
+
+  text-align:left;
+
+  padding:
+    15px 17px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.14);
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.09),
+      rgba(10,15,27,.36)
+    );
+
+  backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 15px 45px
+    rgba(0,0,0,.18),
+
+    inset 0 1px 0
+    rgba(255,255,255,.10);
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+
+}
+
+
+.widget:hover{
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+
+    0 18px 50px
+    rgba(0,0,0,.25),
+
+    0 0 30px
+    rgba(90,190,255,.07);
+
+}
+
+
+.widget .label{
+
+  font-size:10px;
+
+  color:#9da8ba;
+
+  letter-spacing:.7px;
+
+  margin-bottom:7px;
+
+}
+
+
+.weather{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.weather-icon{
+
+  font-size:30px;
+
+}
+
+
+.temp{
+
+  font-size:25px;
+
+  font-weight:600;
+
+}
+
+
+.city{
+
+  font-size:11px;
+
+  color:#aeb7c8;
+
+}
+
+
+.countdown-number{
+
+  font-size:25px;
+
+  font-weight:600;
+
+}
+
+
+.countdown-sub{
+
+  margin-top:3px;
+
+  color:#aeb7c8;
+
+  font-size:11px;
+
+}
+
+
+.date-number{
+
+  font-size:25px;
+
+  font-weight:600;
+
+}
+
+
+/* =========================================================
+   自定义组件
+========================================================= */
+
+.custom-widgets{
+
+  display:contents;
+
+}
+
+
+.custom-widget{
+
+  position:relative;
+
+  min-width:205px;
+
+  max-width:420px;
+
+  min-height:90px;
+
+  padding:
+    15px 17px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.14);
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.09),
+      rgba(10,15,27,.36)
+    );
+
+  backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(22px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 15px 45px
+    rgba(0,0,0,.18),
+
+    inset 0 1px 0
+    rgba(255,255,255,.10);
+
+  overflow:hidden;
+
+  transition:.2s;
+
+}
+
+
+.custom-widget:hover{
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+
+    0 18px 50px
+    rgba(0,0,0,.25),
+
+    0 0 30px
+    rgba(90,190,255,.08);
+
+}
+
+
+.custom-widget-title{
+
+  font-size:10px;
+
+  color:#9da8ba;
+
+  margin-bottom:8px;
+
+  letter-spacing:.7px;
+
+}
+
+
+.custom-widget-content{
+
+  width:100%;
+
+}
+
+
+.custom-widget-edit{
+
+  position:absolute;
+
+  top:7px;
+  right:7px;
+
+  width:27px;
+  height:27px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  border-radius:9px;
+
+  background:
+    rgba(0,0,0,.25);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  opacity:0;
+
+  z-index:5;
+
+  transition:.2s;
+
+}
+
+
+.custom-widget:hover
+.custom-widget-edit{
+
+  opacity:1;
+
+}
+
+
+/* =========================================================
+   页脚
+========================================================= */
+
+footer{
+
+  position:fixed;
+
+  right:22px;
+  bottom:17px;
+
+  color:
+    rgba(255,255,255,.42);
+
+  font-size:10px;
+
+}
+
+
+/* =========================================================
+   Modal
+========================================================= */
+
+.modal{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(0,0,0,.50);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  z-index:100;
+
+  padding:20px;
+
+}
+
+
+.modal.show{
+
+  display:flex;
+
+  animation:
+    modalIn .22s ease;
+
+}
+
+
+@keyframes modalIn{
+
+  from{
+
+    opacity:0;
+
+  }
+
+  to{
+
+    opacity:1;
+
+  }
+
+}
+
+
+.dialog{
+
+  width:
+    min(480px,100%);
+
+  max-height:
+    calc(100vh - 40px);
+
+  overflow:auto;
+
+  padding:25px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.17);
+
+  border-radius:24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20,29,48,.91),
+      rgba(8,13,25,.88)
+    );
+
+  backdrop-filter:
+    blur(35px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(35px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 30px 100px
+    rgba(0,0,0,.55),
+
+    inset 0 1px 0
+    rgba(255,255,255,.12);
+
+}
+
+
+.dialog::-webkit-scrollbar{
+
+  width:4px;
+
+}
+
+
+.dialog::-webkit-scrollbar-thumb{
+
+  background:
+    rgba(255,255,255,.16);
+
+  border-radius:10px;
+
+}
+
+
+.dialog h2{
+
+  margin:
+    0 0 20px;
+
+  font-size:21px;
+
+}
+
+
+.field{
+
+  margin:
+    14px 0;
+
+}
+
+
+.field label{
+
+  display:block;
+
+  color:#aab4c5;
+
+  font-size:11px;
+
+  margin-bottom:7px;
+
+}
+
+
+.field input,
+.field select{
+
+  width:100%;
+
+  height:43px;
+
+  padding:
+    0 12px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  border-radius:11px;
+
+  background:
+    rgba(255,255,255,.055);
+
+  color:#fff;
+
+  outline:none;
+
+}
+
+
+.field input:focus,
+.field select:focus{
+
+  border-color:
+    rgba(120,210,255,.45);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(100,200,255,.06);
+
+}
+
+
+/* =========================================================
+   鸿蒙 Toggle
+========================================================= */
+
+.toggle-row{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  min-height:46px;
+
+  padding:
+    5px 0;
+
+}
+
+
+.toggle-info{
+
+  min-width:0;
+
+}
+
+
+.toggle-title{
+
+  font-size:13px;
+
+  color:#e9eef8;
+
+}
+
+
+.toggle-desc{
+
+  margin-top:3px;
+
+  color:#7f8da3;
+
+  font-size:10px;
+
+}
+
+
+/*
+ * 不再使用原生 checkbox
+ */
+
+.toggle{
+
+  position:relative;
+
+  flex:none;
+
+  width:48px;
+
+  height:28px;
+
+  border-radius:20px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.16);
+
+  background:
+    rgba(255,255,255,.08);
+
+  cursor:pointer;
+
+  transition:
+    background .22s,
+    box-shadow .22s;
+
+}
+
+
+.toggle::after{
+
+  content:"";
+
+  position:absolute;
+
+  top:3px;
+  left:3px;
+
+  width:20px;
+  height:20px;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.82);
+
+  box-shadow:
+    0 3px 8px
+    rgba(0,0,0,.3);
+
+  transition:
+    transform .22s,
+    background .22s;
+
+}
+
+
+.toggle.on{
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(80,170,255,.55),
+      rgba(110,210,255,.78)
+    );
+
+  box-shadow:
+    0 0 22px
+    rgba(80,190,255,.16);
+
+}
+
+
+.toggle.on::after{
+
+  transform:
+    translateX(20px);
+
+  background:#fff;
+
+}
+
+
+/* =========================================================
+   Modal按钮
+========================================================= */
+
+.dialog-buttons{
+
+  display:flex;
+
+  gap:9px;
+
+  align-items:center;
+
+  margin-top:22px;
+
+}
+
+
+.dialog-buttons button{
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
+  border-radius:12px;
+
+  padding:
+    10px 17px;
+
+  cursor:pointer;
+
+  color:#fff;
+
+  transition:.18s;
+
+}
+
+
+.dialog-buttons button:hover{
+
+  transform:
+    translateY(-1px);
+
+}
+
+
+.cancel{
+
+  background:
+    rgba(255,255,255,.07);
+
+}
+
+
+.save{
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(70,160,230,.65),
+      rgba(70,130,210,.55)
+    );
+
+  box-shadow:
+    0 0 20px
+    rgba(70,170,240,.10);
+
+}
+
+
+.delete{
+
+  margin-right:auto;
+
+  background:
+    rgba(220,70,80,.25);
+
+}
+
+
+/* =========================================================
+   HTML 编辑器
+========================================================= */
+
+.html-editor{
+
+  width:100%;
+
+  min-height:280px;
+
+  resize:vertical;
+
+  padding:14px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.13);
+
+  border-radius:13px;
+
+  background:
+    rgba(4,8,15,.72);
+
+  color:#dce8f7;
+
+  outline:none;
+
+  font-family:
+    Consolas,
+    "Cascadia Code",
+    monospace;
+
+  font-size:12px;
+
+  line-height:1.6;
+
+}
+
+
+.html-editor:focus{
+
+  border-color:
+    rgba(110,210,255,.45);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(80,190,255,.06);
+
+}
+
+
+/* =========================================================
+   网页浮窗
+========================================================= */
+
+.web-view{
+
+  position:fixed;
+
+  left:7vw;
+  top:6vh;
+
+  width:86vw;
+  height:86vh;
+
+  z-index:50;
+
+  display:none;
+
+  flex-direction:column;
+
+  overflow:hidden;
+
+  resize:both;
+
+  min-width:360px;
+  min-height:240px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.20);
+
+  border-radius:23px;
+
+  background:
+    rgba(10,15,27,.40);
+
+  backdrop-filter:
+    blur(30px)
+    saturate(150%);
+
+  -webkit-backdrop-filter:
+    blur(30px)
+    saturate(150%);
+
+  box-shadow:
+
+    0 30px 100px
+    rgba(0,0,0,.50),
+
+    inset 0 1px 0
+    rgba(255,255,255,.15),
+
+    0 0 80px
+    rgba(80,180,255,.07);
+
+}
+
+
+.web-view.show{
+
+  display:flex;
+
+  animation:
+    windowIn .25s
+    cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+@keyframes windowIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      scale(.97)
+      translateY(8px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      scale(1)
+      translateY(0);
+
+  }
+
+}
+
+
+/* =========================================================
+   网页顶栏
+========================================================= */
+
+.web-toolbar{
+
+  position:relative;
+
+  height:58px;
+
+  flex:none;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:
+    8px 10px;
+
+  cursor:move;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.10);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.105),
+      rgba(255,255,255,.035)
+    );
+
+  backdrop-filter:
+    blur(35px)
+    saturate(170%);
+
+  -webkit-backdrop-filter:
+    blur(35px)
+    saturate(170%);
+
+}
+
+
+.web-toolbar::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:10%;
+  right:10%;
+
+  top:-1px;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(150,225,255,.7),
+      transparent
+    );
+
+}
+
+
+.web-toolbar::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:20px;
+  right:20px;
+
+  bottom:-1px;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(100,210,255,.30),
+      transparent
+    );
+
+}
+
+
+/* =========================================================
+   网页顶栏按钮
+========================================================= */
+
+.toolbar-btn{
+
+  position:relative;
+
+  width:38px;
+  height:38px;
+
+  flex:none;
+
+  display:grid;
+
+  place-items:center;
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
+  border-radius:12px;
+
+  background:
+    rgba(255,255,255,.065);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  overflow:hidden;
+
+  transition:.18s;
+
+}
+
+
+.toolbar-btn:hover{
+
+  background:
+    rgba(100,200,255,.17);
+
+  border-color:
+    rgba(130,220,255,.22);
+
+  box-shadow:
+    0 0 22px
+    rgba(80,190,255,.14);
+
+}
+
+
+.toolbar-btn:active{
+
+  transform:
+    scale(.91);
+
+}
+
+
+.web-title{
+
+  flex:1;
+
+  min-width:0;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  font-size:13px;
+
+}
+
+
+.web-url{
+
+  max-width:30%;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  color:
+    rgba(210,220,235,.48);
+
+  font-size:10px;
+
+}
+
+
+/* =========================================================
+   iframe
+========================================================= */
+
+.web-view iframe{
+
+  width:100%;
+  height:100%;
+
+  flex:1;
+
+  min-height:0;
+
+  border:0;
+
+  background:#fff;
+
+  display:block;
+
+}
+
+
+/* =========================================================
+   网页无法嵌入提示
+========================================================= */
+
+.web-error{
+
+  position:absolute;
+
+  inset:58px 0 0;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  padding:30px;
+
+  background:
+    rgba(8,12,22,.48);
+
+  backdrop-filter:
+    blur(25px);
+
+  z-index:8;
+
+}
+
+
+.web-error.show{
+
+  display:flex;
+
+}
+
+
+.web-error-box{
+
+  width:
+    min(430px,90%);
+
+  padding:30px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.15);
+
+  border-radius:23px;
+
+  background:
+    rgba(255,255,255,.065);
+
+  box-shadow:
+    0 20px 70px
+    rgba(0,0,0,.35);
+
+}
+
+
+.web-error-icon{
+
+  font-size:40px;
+
+}
+
+
+.web-error-title{
+
+  margin-top:10px;
+
+  font-size:18px;
+
+}
+
+
+.web-error-text{
+
+  margin-top:9px;
+
+  color:#9da8ba;
+
+  font-size:12px;
+
+  line-height:1.7;
+
+}
+
+
+.web-open-external{
+
+  margin-top:18px;
+
+  border:
+    1px solid
+    rgba(130,215,255,.20);
+
+  border-radius:12px;
+
+  padding:
+    10px 18px;
+
+  color:#fff;
+
+  background:
+    rgba(90,190,255,.16);
+
+  cursor:pointer;
+
+}
+
+
+/* =========================================================
+   悬浮球
+========================================================= */
+
+.floating-dock{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:70;
+
+  pointer-events:none;
+
+}
+
+
+.float-ball{
+
+  position:fixed;
+
+  width:57px;
+  height:57px;
+
+  display:grid;
+
+  place-items:center;
+
+  pointer-events:auto;
+
+  border:
+    1px solid
+    rgba(255,255,255,.26);
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.17),
+      rgba(12,20,36,.50)
+    );
+
+  backdrop-filter:
+    blur(22px)
+    saturate(160%);
+
+  -webkit-backdrop-filter:
+    blur(22px)
+    saturate(160%);
+
+  box-shadow:
+
+    0 14px 40px
+    rgba(0,0,0,.40),
+
+    inset 0 1px 0
+    rgba(255,255,255,.20),
+
+    0 0 30px
+    rgba(90,200,255,.10);
+
+  cursor:grab;
+
+  user-select:none;
+
+  overflow:hidden;
+
+  transition:
+    transform .18s,
+    box-shadow .18s;
+
+}
+
+
+.float-ball::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-30%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(120,220,255,.32),
+      transparent 67%
+    );
+
+  animation:
+    ballGlow 3s ease-in-out infinite;
+
+}
+
+
+@keyframes ballGlow{
+
+  0%,100%{
+    transform:scale(.85);
+    opacity:.22;
+  }
+
+  50%{
+    transform:scale(1.1);
+    opacity:.52;
+  }
+
+}
+
+
+.float-ball:hover{
+
+  transform:
+    scale(1.08);
+
+  box-shadow:
+
+    0 16px 45px
+    rgba(0,0,0,.45),
+
+    0 0 40px
+    rgba(90,200,255,.22);
+
+}
+
+
+.float-ball:active{
+
+  cursor:grabbing;
+
+  transform:
+    scale(.94);
+
+}
+
+
+.float-ball img{
+
+  position:relative;
+
+  width:30px;
+  height:30px;
+
+  object-fit:contain;
+
+  border-radius:8px;
+
+  z-index:2;
+
+}
+
+
+.float-fallback{
+
+  position:relative;
+
+  z-index:2;
+
+  font-size:20px;
+
+}
+
+
+/* =========================================================
+   点击光波
+========================================================= */
+
+.click-ripple{
+
+  position:fixed;
+
+  left:0;
+  top:0;
+
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  pointer-events:none;
+
+  z-index:99999;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.7),
+      rgba(100,210,255,.32) 35%,
+      transparent 70%
+    );
+
+  transform:
+    translate(-50%,-50%);
+
+  animation:
+    ripple .55s
+    cubic-bezier(.2,.8,.2,1)
+    forwards;
+
+}
+
+
+@keyframes ripple{
+
+  0%{
+
+    width:8px;
+    height:8px;
+
+    opacity:.9;
+
+  }
+
+  100%{
+
+    width:130px;
+    height:130px;
+
+    opacity:0;
+
+  }
+
+}
+
+
+/* =========================================================
+   Toast
+========================================================= */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+  bottom:30px;
+
+  transform:
+    translate(-50%,20px);
+
+  z-index:99999;
+
+  padding:
+    11px 17px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.14);
+
+  border-radius:13px;
+
+  background:
+    rgba(12,20,35,.72);
+
+  backdrop-filter:
+    blur(20px);
+
+  color:#fff;
+
+  font-size:12px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    .25s;
+
+}
+
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+
+}
+
+
+/* =========================================================
+   响应式
+========================================================= */
+
+@media(max-width:850px){
+
+  .sidebar{
+
+    width:92px;
+
+    left:10px;
+    top:10px;
+    bottom:10px;
+
+    padding:
+      12px 9px;
+
+    border-radius:21px;
+
+  }
+
+
+  .brand{
+
+    justify-content:center;
+
+    padding:
+      3px 0 16px;
+
+  }
+
+
+  .brand>div:last-child,
+  .menu-title,
+  .side-bottom{
+
+    display:none;
+
+  }
+
+
+  .menu a{
+
+    justify-content:center;
+
+    padding:9px 0;
+
+    margin:5px 0;
+
+  }
+
+
+  .menu a span:not(.ico){
+
+    display:none;
+
+  }
+
+
+  .menu .ico{
+
+    width:42px;
+
+    min-width:42px;
+
+    height:42px;
+
+    font-size:18px;
+
+    border-radius:12px;
+
+  }
+
+
+  .custom-actions{
+
+    display:flex;
+
+    margin:8px 0;
+
+  }
+
+
+  .custom-actions button{
+
+    height:42px;
+
+    padding:0;
+
+    font-size:20px;
+
+    border-radius:12px;
+
+  }
+
+
+  .custom-actions button span,
+  .bg-btn span{
+
+    display:none;
+
+  }
+
+
+  .bg-btn{
+
+    height:42px;
+
+    padding:0;
+
+    font-size:18px;
+
+    border-radius:12px;
+
+  }
+
+
+  main{
+
+    margin-left:112px;
+
+    padding:20px;
+
+  }
+
+}
+
+
+@media(max-width:520px){
+
+  .sidebar{
+
+    left:7px;
+    top:7px;
+    bottom:7px;
+
+    width:78px;
+
+    padding:
+      9px 7px;
+
+  }
+
+
+  .logo{
+
+    width:40px;
+    height:40px;
+
+  }
+
+
+  .menu .ico{
+
+    width:38px;
+    min-width:38px;
+
+    height:38px;
+
+  }
+
+
+  main{
+
+    margin-left:92px;
+
+    padding:14px;
+
+  }
+
+
+  .search input{
+
+    height:58px;
+
+    font-size:15px;
+
+  }
+
+
+  .search button{
+
+    width:44px;
+    height:44px;
+
+  }
+
+
+  .widgets{
+
+    margin-top:18px;
+
+  }
+
+
+  .widget,
+  .custom-widget{
+
+    width:
+      min(360px,100%);
+
+  }
+
+
+  footer{
+
+    display:none;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     背景
+========================================================= -->
+
+<div id="bg"></div>
+
+<div id="shade"></div>
+
+<div id="noise"></div>
+
+
+<!-- =========================================================
+     侧边栏
+========================================================= -->
+
+<aside class="sidebar">
+
+
+  <div class="brand">
+
+    <div class="logo">
+      落
+    </div>
+
+    <div>
+
+      <b>LUO</b>
+
+      <small>
+        STARTPAGE
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <div class="menu-title">
+    自定义网站
+  </div>
+
+
+  <nav
+    class="menu"
+    id="customMenu"
+  ></nav>
+
+
+  <div class="custom-actions">
+
+    <button
+      id="addBtn"
+    >
+      ＋
+      <span>
+        添加网站
+      </span>
+    </button>
+
+  </div>
+
+
+  <button
+    id="bgBtn"
+    class="bg-btn"
+  >
+    🖼️
+    <span>
+      背景设置
+    </span>
+  </button>
+
+
+  <button
+    id="widgetBtn"
+    class="bg-btn"
+  >
+    🧩
+    <span>
+      组件设置
+    </span>
+  </button>
+
+
+  <button
+    id="customWidgetBtn"
+    class="bg-btn"
+  >
+    🧱
+    <span>
+      自定义组件
+    </span>
+  </button>
+
+
+  <div class="side-bottom">
+
+    您的所有设置
+    都会保存在本地。
+
+  </div>
+
+
+  <input
+    id="bgUpload"
+    type="file"
+    accept="image/*"
+    hidden
+  >
+
+</aside>
+
+
+<!-- =========================================================
+     网页浮窗
+========================================================= -->
+
+<div
+  id="webView"
+  class="web-view"
+>
+
+
+  <div
+    class="web-toolbar"
+  >
+
+
+    <button
+      id="backHome"
+      class="toolbar-btn"
+      title="返回主页"
+    >
+      ←
+    </button>
+
+
+    <div
+      id="webTitle"
+      class="web-title"
+    >
+      网页
+    </div>
+
+
+    <div
+      id="webUrl"
+      class="web-url"
+    ></div>
+
+
+    <button
+      id="openExternal"
+      class="toolbar-btn"
+      title="在浏览器新标签页打开"
+    >
+      ↗
+    </button>
+
+
+    <button
+      id="floatWeb"
+      class="toolbar-btn"
+      title="收起为悬浮球"
+    >
+      ●
+    </button>
+
+
+    <button
+      id="closeWeb"
+      class="toolbar-btn"
+      title="关闭"
+    >
+      ×
+    </button>
+
+
+  </div>
+
+
+  <div
+    id="webError"
+    class="web-error"
+  >
+
+    <div
+      class="web-error-box"
+    >
+
+      <div class="web-error-icon">
+        🌐
+      </div>
+
+      <div class="web-error-title">
+        网站无法嵌入
+      </div>
+
+      <div class="web-error-text">
+
+        这个网站可能禁止其他网页
+        使用 iframe 加载。
+
+        <br>
+
+        可以点击下面的按钮
+        在浏览器新标签页打开。
+
+      </div>
+
+      <button
+        id="openExternalError"
+        class="web-open-external"
+      >
+        ↗ 在浏览器中打开
+      </button>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     主页面
+========================================================= -->
+
+<main>
+
+<section class="center">
+
+
+  <div class="clock-main">
+
+    <div
+      class="clock-time"
+      id="clockTime"
+    >
+      00:00:00
+    </div>
+
+    <div
+      class="clock-date"
+      id="clockDate"
+    >
+      正在读取日期...
+    </div>
+
+  </div>
+
+
+  <form
+    class="search"
+    id="searchForm"
+  >
+
+    <input
+      id="searchInput"
+      autocomplete="off"
+      placeholder="Bing 搜索你想找的内容..."
+    >
+
+    <button>
+      ⌕
+    </button>
+
+  </form>
+
+
+  <div
+    class="widgets"
+    id="widgets"
+  >
+
+
+    <!-- 天气 -->
+
+    <div
+      class="widget"
+      id="weatherWidget"
+    >
+
+      <div class="label">
+        WEATHER
+      </div>
+
+      <div class="weather">
+
+        <div
+          class="weather-icon"
+        >
+          ☁️
+        </div>
+
+        <div>
+
+          <div
+            class="temp"
+            id="temp"
+          >
+            --°C
+          </div>
+
+          <div
+            class="city"
+            id="weatherText"
+          >
+            正在获取天气...
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 倒计时 -->
+
+    <div
+      class="widget"
+      id="countdownWidget"
+    >
+
+      <div class="label">
+        COUNTDOWN
+      </div>
+
+      <div
+        class="countdown-number"
+        id="countdownNumber"
+      >
+        --天 --:--:--
+      </div>
+
+      <div
+        class="countdown-sub"
+        id="countdownSub"
+      >
+        请在组件设置中设置目标时间
+      </div>
+
+    </div>
+
+
+    <!-- 日期 -->
+
+    <div
+      class="widget"
+      id="dateWidget"
+    >
+
+      <div class="label">
+        DATE
+      </div>
+
+      <div
+        class="date-number"
+        id="dateNumber"
+      >
+        --月--日
+      </div>
+
+      <div
+        class="countdown-sub"
+        id="dateWeek"
+      >
+        星期--
+      </div>
+
+    </div>
+
+
+    <!-- 自定义组件 -->
+
+    <div
+      id="customWidgets"
+      class="custom-widgets"
+    ></div>
+
+
+  </div>
+
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     悬浮球
+========================================================= -->
+
+<div
+  id="floatingDock"
+  class="floating-dock"
+></div>
+
+
+<!-- =========================================================
+     页脚
+========================================================= -->
+
+<footer>
+  © 2026 Luo · FangZirui
+</footer>
+
+
+<!-- =========================================================
+     添加网站 Modal
+========================================================= -->
+
+<div
+  class="modal"
+  id="modal"
+>
+
+  <div class="dialog">
+
+
+    <h2 id="modalTitle">
+      添加标签
+    </h2>
+
+
+    <div class="field">
+
+      <label>
+        名称
+      </label>
+
+      <input
+        id="nameInput"
+        placeholder="例如：我的博客"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        网址
+      </label>
+
+      <input
+        id="urlInput"
+        placeholder="https://example.com"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        图标
+      </label>
+
+      <input
+        id="iconInput"
+        maxlength="4"
+        placeholder="例如：★"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        图标 URL（可选）
+      </label>
+
+      <input
+        id="iconUrlInput"
+        placeholder="留空自动读取 favicon"
+      >
+
+    </div>
+
+
+    <div class="dialog-buttons">
+
+      <button
+        class="delete"
+        id="deleteBtn"
+        style="display:none"
+      >
+        删除
+      </button>
+
+      <button
+        class="cancel"
+        id="cancelBtn"
+      >
+        取消
+      </button>
+
+      <button
+        class="save"
+        id="saveBtn"
+      >
+        保存
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     背景设置
+========================================================= -->
+
+<div
+  class="modal"
+  id="backgroundModal"
+>
+
+  <div class="dialog">
+
+
+    <h2>
+      背景设置
+    </h2>
+
+
+    <div class="field">
+
+      <label>
+        背景图片
+      </label>
+
+      <button
+        class="bg-btn"
+        id="uploadBackground"
+      >
+        📁 选择本地图片
+      </button>
+
+    </div>
+
+     <div class="field">
+   <label>或输入图片链接（图床/网络图片）</label>
+   <input 
+    id="bgImageUrl" 
+    type="text" 
+    placeholder="https://example.com/background.jpg"
+    style="width:100%;height:43px;padding:0 12px;border:1px solid rgba(255,255,255,.13);border-radius:11px;background:rgba(255,255,255,.055);color:#fff;outline:none;"
+   >
+   </div>
+
+    <div class="field">
+
+      <label>
+        模糊程度
+      </label>
+
+      <input
+        id="bgBlur"
+        type="range"
+        min="0"
+        max="20"
+        value="0"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        背景亮度
+      </label>
+
+      <input
+        id="bgBrightness"
+        type="range"
+        min="40"
+        max="140"
+        value="100"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        背景饱和度
+      </label>
+
+      <input
+        id="bgSaturation"
+        type="range"
+        min="40"
+        max="160"
+        value="100"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        背景遮罩
+      </label>
+
+      <input
+        id="bgShade"
+        type="range"
+        min="0"
+        max="85"
+        value="35"
+      >
+
+    </div>
+
+
+    <div class="dialog-buttons">
+
+      <button
+        class="cancel"
+        id="backgroundReset"
+      >
+        恢复默认
+      </button>
+
+      <button
+        class="save"
+        id="backgroundDone"
+      >
+        完成
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     组件设置
+========================================================= -->
+
+<div
+  class="modal"
+  id="widgetModal"
+>
+
+  <div class="dialog">
+
+
+    <h2>
+      组件设置
+    </h2>
+
+
+    <div class="toggle-row">
+
+      <div class="toggle-info">
+
+        <div class="toggle-title">
+          显示天气
+        </div>
+
+        <div class="toggle-desc">
+          显示当前位置天气
+        </div>
+
+      </div>
+
+      <div
+        class="toggle on"
+        id="toggleWeather"
+      ></div>
+
+    </div>
+
+
+    <div class="toggle-row">
+
+      <div class="toggle-info">
+
+        <div class="toggle-title">
+          显示倒计时
+        </div>
+
+        <div class="toggle-desc">
+          显示目标时间倒计时
+        </div>
+
+      </div>
+
+      <div
+        class="toggle on"
+        id="toggleCountdown"
+      ></div>
+
+    </div>
+
+
+    <div class="toggle-row">
+
+      <div class="toggle-info">
+
+        <div class="toggle-title">
+          显示日期
+        </div>
+
+        <div class="toggle-desc">
+          显示今天日期
+        </div>
+
+      </div>
+
+      <div
+        class="toggle on"
+        id="toggleDate"
+      ></div>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        倒计时目标时间
+      </label>
+
+      <input
+        type="datetime-local"
+        id="countdownTarget"
+      >
+
+    </div>
+
+
+    <div class="dialog-buttons">
+
+      <button
+        class="cancel"
+        id="widgetCancel"
+      >
+        取消
+      </button>
+
+      <button
+        class="save"
+        id="widgetSave"
+      >
+        保存
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     自定义组件
+========================================================= -->
+
+<div
+  class="modal"
+  id="customWidgetModal"
+>
+
+  <div
+    class="dialog"
+    style="width:min(760px,100%)"
+  >
+
+
+    <h2 id="customWidgetModalTitle">
+      添加自定义组件
+    </h2>
+
+
+    <div class="field">
+
+      <label>
+        组件名称
+      </label>
+
+      <input
+        id="customWidgetName"
+        placeholder="例如：音乐、服务器状态、个人信息"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        HTML / CSS / JavaScript
+      </label>
+
+      <textarea
+        id="customWidgetCode"
+        class="html-editor"
+        spellcheck="false"
+        placeholder="在这里写 HTML / CSS / JS"
+      ></textarea>
+
+    </div>
+
+
+    <div class="toggle-row">
+
+      <div class="toggle-info">
+
+        <div class="toggle-title">
+          启用组件
+        </div>
+
+        <div class="toggle-desc">
+          关闭后不会显示，但代码仍会保存
+        </div>
+
+      </div>
+
+      <div
+        class="toggle on"
+        id="customWidgetEnabled"
+      ></div>
+
+    </div>
+
+
+    <div class="dialog-buttons">
+
+      <button
+        class="delete"
+        id="customWidgetDelete"
+        style="display:none"
+      >
+        删除
+      </button>
+
+      <button
+        class="cancel"
+        id="customWidgetCancel"
+      >
+        取消
+      </button>
+
+      <button
+        class="save"
+        id="customWidgetSave"
+      >
+        保存组件
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     Toast
+========================================================= -->
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   通用工具
+========================================================= */
+
+function $(id){
+
+  return document.getElementById(id);
+
+}
+
+
+function toast(text){
+
+  const el=$("toast");
+
+  el.textContent=text;
+
+  el.classList.add("show");
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer=setTimeout(
+    ()=>{
+      el.classList.remove("show");
+    },
+    1800
+  );
+
+}
+
+
+/* =========================================================
+   鸿蒙点击光效
+========================================================= */
+
+document.addEventListener(
+  "pointerdown",
+  e=>{
+
+    if(
+      e.target.closest(
+        "input,textarea"
+      )
+    ){
+      return;
+    }
+
+
+    const ripple=
+      document.createElement("div");
+
+    ripple.className=
+      "click-ripple";
+
+    ripple.style.left=
+      e.clientX+"px";
+
+    ripple.style.top=
+      e.clientY+"px";
+
+    document.body.appendChild(
+      ripple
+    );
+
+
+    setTimeout(
+      ()=>{
+        ripple.remove();
+      },
+      600
+    );
+
+  },
+  true
+);
+
+
+/* =========================================================
+   背景
+========================================================= */
+
+const BG_KEY=
+  "luo_background_v2";
+
+
+const defaultBackgrounds=[
+
+  "https://api.bimg.cc/random?w=1920&h=1080&mkt=zh-CN"
+
+];
+
+
+let backgroundSettings=
+  JSON.parse(
+    localStorage.getItem(
+      BG_KEY
+    ) ||
+    "{}"
+  );
+
+
+function applyBackground(){
+
+  const bg=
+    backgroundSettings.image ||
+    defaultBackgrounds[0];
+
+
+  $("bg").style.backgroundImage=
+    `url("${bg}")`;
+
+
+  $("bg").style.filter=
+    `
+      blur(${backgroundSettings.blur||0}px)
+      brightness(${backgroundSettings.brightness||100}%)
+      saturate(${backgroundSettings.saturation||100}%)
+    `;
+
+
+  $("shade").style.background=
+    `
+      rgba(
+        5,
+        8,
+        18,
+        ${(backgroundSettings.shade??35)/100}
+      )
+    `;
+
+}
+
+
+if(
+  !backgroundSettings.image
+){
+
+  backgroundSettings.image=
+    defaultBackgrounds[
+      Math.floor(
+        Math.random() *
+        defaultBackgrounds.length
+      )
+    ];
+
+}
+
+
+backgroundSettings.blur ??=0;
+
+backgroundSettings.brightness ??=100;
+
+backgroundSettings.saturation ??=100;
+
+backgroundSettings.shade ??=35;
+
+
+localStorage.setItem(
+  BG_KEY,
+  JSON.stringify(
+    backgroundSettings
+  )
+);
+
+
+applyBackground();
+
+
+/* 背景按钮 */
+
+$("bgBtn").onclick = () => {
+  $("backgroundModal").classList.add("show");
+  
+  $("bgBlur").value = backgroundSettings.blur;
+  $("bgBrightness").value = backgroundSettings.brightness;
+  $("bgSaturation").value = backgroundSettings.saturation;
+  $("bgShade").value = backgroundSettings.shade;
+  
+  // 👇 新增：恢复已保存的 URL
+  const currentBg = backgroundSettings.image || "";
+  if (currentBg.startsWith("http://") || currentBg.startsWith("https://")) {
+    $("bgImageUrl").value = currentBg;
+  } else {
+    $("bgImageUrl").value = "";
+  }
+};
+
+
+$("uploadBackground").onclick=
+  ()=>{
+    $("bgUpload").click();
+  };
+
+
+$("bgUpload").onchange=
+  ()=>{
+
+    const file=
+      $("bgUpload").files?.[0];
+
+    if(!file)return;
+
+
+    if(
+      !file.type.startsWith(
+        "image/"
+      )
+    ){
+
+      toast("请选择图片文件");
+
+      return;
+
+    }
+
+
+    const reader=
+      new FileReader();
+
+
+    reader.onload=
+      ()=>{
+        backgroundSettings.image=
+          reader.result;
+
+        localStorage.setItem(
+          BG_KEY,
+          JSON.stringify(
+            backgroundSettings
+          )
+        );
+
+        applyBackground();
+
+        toast("背景已更新");
+
+      };
+
+
+    reader.readAsDataURL(file);
+
+  };
+
+
+$("bgBlur").oninput=
+  ()=>{
+    backgroundSettings.blur=
+      Number($("bgBlur").value);
+
+    applyBackground();
+
+  };
+
+
+$("bgBrightness").oninput=
+  ()=>{
+    backgroundSettings.brightness=
+      Number(
+        $("bgBrightness").value
+      );
+
+    applyBackground();
+
+  };
+
+
+$("bgSaturation").oninput=
+  ()=>{
+    backgroundSettings.saturation=
+      Number(
+        $("bgSaturation").value
+      );
+
+    applyBackground();
+
+  };
+
+
+$("bgShade").oninput=
+  ()=>{
+    backgroundSettings.shade=
+      Number(
+        $("bgShade").value
+      );
+
+    applyBackground();
+
+  };
+
+
+$("backgroundDone").onclick = () => {
+  // 检查是否有输入的 URL
+  const urlInput = $("bgImageUrl");
+  const url = urlInput.value.trim();
+  
+  if (url) {
+    // 简单验证 URL
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      backgroundSettings.image = url;
+      localStorage.setItem(BG_KEY, JSON.stringify(backgroundSettings));
+      applyBackground();
+      toast("背景已更新");
+    } else {
+      toast("请输入有效的图片链接（以 http:// 或 https:// 开头）");
+      return;
+    }
+  }
+  
+  // 保存其他设置（模糊、亮度等）
+  localStorage.setItem(BG_KEY, JSON.stringify(backgroundSettings));
+  $("backgroundModal").classList.remove("show");
+};
+
+$("backgroundReset").onclick = () => {
+  backgroundSettings = {
+    image: defaultBackgrounds[0],
+    blur: 0,
+    brightness: 100,
+    saturation: 100,
+    shade: 35
+  };
+  
+  localStorage.setItem(BG_KEY, JSON.stringify(backgroundSettings));
+  applyBackground();
+  
+  $("bgBlur").value = 0;
+  $("bgBrightness").value = 100;
+  $("bgSaturation").value = 100;
+  $("bgShade").value = 35;
+  $("bgImageUrl").value = ""; // 👈 新增：清空 URL 输入框
+  
+  toast("已恢复默认背景");
+};
+
+
+/* =========================================================
+   添加网站
+========================================================= */
+
+const STORAGE_KEY=
+  "luo_custom_links_v2";
+
+
+let links=
+  JSON.parse(
+    localStorage.getItem(
+      STORAGE_KEY
+    ) ||
+    "[]"
+  );
+
+
+let editingIndex=-1;
+
+
+const menu=
+  $("customMenu");
+
+
+function getSiteIcon(url){
+
+  try{
+
+    const u=
+      new URL(url);
+
+    return u.origin +
+  "/favicon.ico";
+
+  }catch(e){
+
+    return "";
+
+  }
+
+}
+
+
+function renderLinks(){
+
+  menu.innerHTML="";
+
+
+  links.forEach(
+    (item,index)=>{
+
+      const wrap=
+        document.createElement(
+          "div"
+        );
+
+
+      wrap.className=
+        "custom-item";
+
+
+      const a=
+        document.createElement(
+          "a"
+        );
+
+
+      a.href=
+        item.url;
+
+      a.title=
+        item.url;
+
+      a.dataset.internal=
+        "1";
+
+
+      const ico=
+        document.createElement(
+          "span"
+        );
+
+
+      ico.className=
+        "ico";
+
+
+      if(item.iconUrl){
+
+        const img=
+          document.createElement(
+            "img"
+          );
+
+
+        img.src=
+          item.iconUrl;
+
+
+        img.alt="";
+
+
+        img.onerror=
+          ()=>{
+            img.remove();
+
+            ico.textContent=
+              item.icon ||
+              "🔗";
+          };
+
+
+        ico.appendChild(
+          img
+        );
+
+      }else{
+
+        ico.textContent=
+          item.icon ||
+          "🔗";
+
+      }
+
+
+      const text=
+        document.createElement(
+          "span"
+        );
+
+
+      text.textContent=
+        item.name;
+
+
+      a.append(
+        ico,
+        text
+      );
+
+
+      const edit=
+        document.createElement(
+          "button"
+        );
+
+
+      edit.className=
+        "edit";
+
+
+      edit.textContent=
+        "✎";
+
+
+      edit.onclick=
+        e=>{
+
+          e.preventDefault();
+
+          e.stopPropagation();
+
+          openEditor(index);
+
+        };
+
+
+      wrap.append(
+        a,
+        edit
+      );
+
+
+      menu.appendChild(
+        wrap
+      );
+
+    }
+  );
+
+}
+
+
+function openEditor(
+  index=-1
+){
+
+  editingIndex=
+    index;
+
+
+  $("modalTitle")
+    .textContent=
+      index<0
+      ?
+      "添加标签"
+      :
+      "编辑标签";
+
+
+  if(index<0){
+
+    $("nameInput").value="";
+
+    $("urlInput").value="";
+
+    $("iconInput").value="";
+
+    $("iconUrlInput").value="";
+
+    $("deleteBtn")
+      .style.display=
+        "none";
+
+  }else{
+
+    const x=
+      links[index];
+
+
+    $("nameInput").value=
+      x.name;
+
+    $("urlInput").value=
+      x.url;
+
+    $("iconInput").value=
+      x.icon||"";
+
+    $("iconUrlInput").value=
+      x.iconUrl||"";
+
+
+    $("deleteBtn")
+      .style.display=
+        "block";
+
+  }
+
+
+  $("modal")
+    .classList.add("show");
+
+}
+
+
+$("addBtn").onclick=
+  ()=>{
+    openEditor();
+  };
+
+
+$("cancelBtn").onclick=
+  ()=>{
+    $("modal")
+      .classList.remove("show");
+  };
+
+
+$("saveBtn").onclick=
+  ()=>{
+
+    let name=
+      $("nameInput")
+        .value
+        .trim();
+
+
+    let url=
+      $("urlInput")
+        .value
+        .trim();
+
+
+    let icon=
+      $("iconInput")
+        .value
+        .trim();
+
+
+    if(
+      !name ||
+      !url
+    ){
+
+      toast(
+        "请填写名称和网址"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !/^https?:\/\//i
+        .test(url)
+    ){
+
+      url=
+        "https://"+url;
+
+    }
+
+
+    let iconUrl=
+      $("iconUrlInput")
+        .value
+        .trim();
+
+
+    if(!iconUrl){
+
+      iconUrl=
+        getSiteIcon(url);
+
+    }
+
+
+    const item={
+
+      name,
+
+      url,
+
+      icon,
+
+      iconUrl
+
+    };
+
+
+    if(
+      editingIndex<0
+    ){
+
+      links.push(
+        item
+      );
+
+    }else{
+
+      links[
+        editingIndex
+      ]=
+        item;
+
+    }
+
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(
+        links
+      )
+    );
+
+
+    renderLinks();
+
+
+    $("modal")
+      .classList.remove(
+        "show"
+      );
+
+
+    toast(
+      "网站已保存"
+    );
+
+  };
+
+
+$("deleteBtn").onclick=
+  ()=>{
+
+    if(
+      editingIndex>=0 &&
+      confirm(
+        "确定删除这个标签吗？"
+      )
+    ){
+
+      links.splice(
+        editingIndex,
+        1
+      );
+
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+          links
+        )
+      );
+
+
+      renderLinks();
+
+
+      $("modal")
+        .classList.remove(
+          "show"
+        );
+
+
+      toast(
+        "网站已删除"
+      );
+
+    }
+
+  };
+
+
+renderLinks();
+
+
+/* =========================================================
+   时间
+========================================================= */
+
+(function(){
+
+  const pad=
+    n=>
+      String(n)
+        .padStart(2,"0");
+
+
+  const weekdays=[
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六"
+  ];
+
+
+  function update(){
+
+    const now=
+      new Date();
+
+
+    $("clockTime")
+      .textContent=
+        `${pad(now.getHours())}:`+
+        `${pad(now.getMinutes())}:`+
+        `${pad(now.getSeconds())}`;
+
+
+    $("clockDate")
+      .textContent=
+        `${now.getFullYear()}年`+
+        `${pad(now.getMonth()+1)}月`+
+        `${pad(now.getDate())}日 · `+
+        `${weekdays[now.getDay()]}`;
+
+
+    $("dateNumber")
+      .textContent=
+        `${now.getMonth()+1}月`+
+        `${now.getDate()}日`;
+
+
+    $("dateWeek")
+      .textContent=
+        weekdays[
+          now.getDay()
+        ];
+
+  }
+
+
+  update();
+
+
+  setInterval(
+    update,
+    1000
+  );
+
+})();
+
+
+/* =========================================================
+   天气
+========================================================= */
+
+async function loadWeather(){
+
+  try{
+
+    const ipRes=
+      await fetch(
+        "https://ipwho.is/"
+      );
+
+
+    if(!ipRes.ok)
+      throw new Error();
+
+
+    const ip=
+      await ipRes.json();
+
+
+    if(!ip.success)
+      throw new Error();
+
+
+    const lat=
+      ip.latitude;
+
+
+    const lon=
+      ip.longitude;
+
+
+    const weatherRes=
+      await fetch(
+
+        `https://api.open-meteo.com/v1/forecast`+
+        `?latitude=${lat}`+
+        `&longitude=${lon}`+
+        `&current=temperature_2m,weather_code`+
+        `&timezone=auto`
+
+      );
+
+
+    const data=
+      await weatherRes.json();
+
+
+    const icons={
+
+      0:"☀️",
+
+      1:"🌤️",
+
+      2:"⛅",
+
+      3:"☁️",
+
+      45:"🌫️",
+
+      48:"🌫️",
+
+      51:"🌦️",
+
+      53:"🌦️",
+
+      55:"🌦️",
+
+      61:"🌧️",
+
+      63:"🌧️",
+
+      65:"🌧️",
+
+      71:"🌨️",
+
+      73:"🌨️",
+
+      75:"❄️",
+
+      80:"🌦️",
+
+      81:"🌧️",
+
+      82:"⛈️",
+
+      95:"⛈️",
+
+      96:"⛈️",
+
+      99:"⛈️"
+
+    };
+
+
+    $("weatherWidget")
+      .querySelector(
+        ".weather-icon"
+      )
+      .textContent=
+        icons[
+          data.current.weather_code
+        ] ||
+        "🌤️";
+
+
+    $("temp")
+      .textContent=
+        Math.round(
+          data.current.temperature_2m
+        )+
+        "°C";
+
+
+    $("weatherText")
+      .textContent=
+        ip.city+
+        " · "+
+        ip.country;
+
+
+  }catch(e){
+
+    $("weatherText")
+      .textContent=
+        "天气服务暂时不可用";
+
+  }
+
+}
+
+
+loadWeather();
+
+
+/* =========================================================
+   组件设置
+========================================================= */
+
+const WIDGET_KEY=
+  "luo_widgets_v2";
+
+
+let widgetSettings=
+  JSON.parse(
+    localStorage.getItem(
+      WIDGET_KEY
+    ) ||
+    "{}"
+  );
+
+
+widgetSettings.weather ??=
+  true;
+
+widgetSettings.countdown ??=
+  true;
+
+widgetSettings.date ??=
+  true;
+
+
+function applyWidgetSettings(){
+
+  $("weatherWidget")
+    .style.display=
+      widgetSettings.weather
+      ?
+      ""
+      :
+      "none";
+
+
+  $("countdownWidget")
+    .style.display=
+      widgetSettings.countdown
+      ?
+      ""
+      :
+      "none";
+
+
+  $("dateWidget")
+    .style.display=
+      widgetSettings.date
+      ?
+      ""
+      :
+      "none";
+
+
+  $("toggleWeather")
+    .classList.toggle(
+      "on",
+      widgetSettings.weather
+    );
+
+
+  $("toggleCountdown")
+    .classList.toggle(
+      "on",
+      widgetSettings.countdown
+    );
+
+
+  $("toggleDate")
+    .classList.toggle(
+      "on",
+      widgetSettings.date
+    );
+
+}
+
+
+function toggleSetting(
+  key
+){
+
+  widgetSettings[key]=
+    !widgetSettings[key];
+
+  applyWidgetSettings();
+
+}
+
+
+$("toggleWeather").onclick=
+  ()=>{
+    toggleSetting("weather");
+  };
+
+
+$("toggleCountdown").onclick=
+  ()=>{
+    toggleSetting("countdown");
+  };
+
+
+$("toggleDate").onclick=
+  ()=>{
+    toggleSetting("date");
+  };
+
+
+$("widgetBtn").onclick=
+  ()=>{
+
+    $("widgetModal")
+      .classList.add("show");
+
+    if(
+      widgetSettings.target
+    ){
+
+      $("countdownTarget")
+        .value=
+          widgetSettings.target;
+
+    }
+
+  };
+
+
+$("widgetCancel").onclick=
+  ()=>{
+
+    $("widgetModal")
+      .classList.remove(
+        "show"
+      );
+
+  };
+
+
+$("widgetSave").onclick=
+  ()=>{
+
+    widgetSettings.target=
+      $("countdownTarget")
+        .value;
+
+
+    localStorage.setItem(
+      WIDGET_KEY,
+      JSON.stringify(
+        widgetSettings
+      )
+    );
+
+
+    applyWidgetSettings();
+
+
+    $("widgetModal")
+      .classList.remove(
+        "show"
+      );
+
+
+    toast(
+      "组件设置已保存"
+    );
+
+  };
+
+
+applyWidgetSettings();
+
+
+/* =========================================================
+   倒计时
+========================================================= */
+
+function updateCountdown(){
+
+  const target=
+    widgetSettings.target;
+
+
+  if(!target){
+
+    $("countdownNumber")
+      .textContent=
+        "--天 --:--:--";
+
+    $("countdownSub")
+      .textContent=
+        "请在组件设置中设置目标时间";
+
+    return;
+
+  }
+
+
+  const end=
+    new Date(target)
+      .getTime();
+
+
+  const now=
+    Date.now();
+
+
+  let diff=
+    end-now;
+
+
+  if(diff<=0){
+
+    $("countdownNumber")
+      .textContent=
+        "已到达";
+
+    $("countdownSub")
+      .textContent=
+        "目标时间已经到达";
+
+    return;
+
+  }
+
+
+  const days=
+    Math.floor(
+      diff /
+      86400000
+    );
+
+
+  diff%=
+    86400000;
+
+
+  const hours=
+    Math.floor(
+      diff /
+      3600000
+    );
+
+
+  diff%=
+    3600000;
+
+
+  const minutes=
+    Math.floor(
+      diff /
+      60000
+    );
+
+
+  const seconds=
+    Math.floor(
+      (diff%60000) /
+      1000
+    );
+
+
+  const pad=
+    n=>
+      String(n)
+        .padStart(2,"0");
+
+
+  $("countdownNumber")
+    .textContent=
+      `${days}天 `+
+      `${pad(hours)}:`+
+      `${pad(minutes)}:`+
+      `${pad(seconds)}`;
+
+
+  $("countdownSub")
+    .textContent=
+      new Date(target)
+        .toLocaleString(
+          "zh-CN",
+          {
+            year:"numeric",
+            month:"2-digit",
+            day:"2-digit",
+            hour:"2-digit",
+            minute:"2-digit"
+          }
+        );
+
+}
+
+
+updateCountdown();
+
+
+setInterval(
+  updateCountdown,
+  1000
+);
+
+
+/* =========================================================
+   自定义 HTML 组件
+========================================================= */
+
+const CUSTOM_WIDGET_KEY=
+  "luo_custom_widgets_v2";
+
+
+let customWidgets=
+  JSON.parse(
+    localStorage.getItem(
+      CUSTOM_WIDGET_KEY
+    ) ||
+    "[]"
+  );
+
+
+let editingCustomWidget=
+  -1;
+
+
+function saveCustomWidgets(){
+
+  localStorage.setItem(
+    CUSTOM_WIDGET_KEY,
+    JSON.stringify(
+      customWidgets
+    )
+  );
+
+}
+
+
+function openCustomWidgetEditor(
+  index=-1
+){
+
+  editingCustomWidget=
+    index;
+
+
+  if(index<0){
+
+    $("customWidgetModalTitle")
+      .textContent=
+        "添加自定义组件";
+
+
+    $("customWidgetName")
+      .value="";
+
+
+    $("customWidgetCode")
+      .value=
+`<div style="
+  font-size:20px;
+  font-weight:600;
+">
+  Hello Luo
+</div>
+
+<div style="
+  margin-top:5px;
+  color:#9da8ba;
+">
+  这是我的自定义组件
+</div>`;
+
+
+    $("customWidgetEnabled")
+      .classList.add("on");
+
+
+    $("customWidgetDelete")
+      .style.display=
+        "none";
+
+  }else{
+
+    const item=
+      customWidgets[index];
+
+
+    $("customWidgetModalTitle")
+      .textContent=
+        "编辑自定义组件";
+
+
+    $("customWidgetName")
+      .value=
+        item.name;
+
+
+    $("customWidgetCode")
+      .value=
+        item.code;
+
+
+    $("customWidgetEnabled")
+      .classList.toggle(
+        "on",
+        item.enabled!==false
+      );
+
+
+    $("customWidgetDelete")
+      .style.display=
+        "block";
+
+  }
+
+
+  $("customWidgetModal")
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+$("customWidgetBtn").onclick=
+  ()=>{
+    openCustomWidgetEditor();
+  };
+
+
+$("customWidgetCancel").onclick=
+  ()=>{
+    $("customWidgetModal")
+      .classList.remove(
+        "show"
+      );
+  };
+
+
+$("customWidgetEnabled").onclick=
+  ()=>{
+    $("customWidgetEnabled")
+      .classList.toggle("on");
+  };
+
+
+$("customWidgetSave").onclick=
+  ()=>{
+
+    const name=
+      $("customWidgetName")
+        .value
+        .trim();
+
+
+    const code=
+      $("customWidgetCode")
+        .value
+        .trim();
+
+
+    if(!name){
+
+      toast(
+        "请输入组件名称"
+      );
+
+      return;
+
+    }
+
+
+    if(!code){
+
+      toast(
+        "请输入 HTML 代码"
+      );
+
+      return;
+
+    }
+
+
+    const item={
+
+      id:
+        Date.now(),
+
+      name,
+
+      code,
+
+      enabled:
+        $("customWidgetEnabled")
+          .classList.contains(
+            "on"
+          )
+
+    };
+
+
+    if(
+      editingCustomWidget<0
+    ){
+
+      customWidgets.push(
+        item
+      );
+
+    }else{
+
+      item.id=
+        customWidgets[
+          editingCustomWidget
+        ].id;
+
+
+      customWidgets[
+        editingCustomWidget
+      ]=
+        item;
+
+    }
+
+
+    saveCustomWidgets();
+
+
+    renderCustomWidgets();
+
+
+    $("customWidgetModal")
+      .classList.remove(
+        "show"
+      );
+
+
+    toast(
+      "自定义组件已保存"
+    );
+
+  };
+
+
+$("customWidgetDelete").onclick=
+  ()=>{
+
+    if(
+      editingCustomWidget<0
+    ){
+      return;
+    }
+
+
+    const item=
+      customWidgets[
+        editingCustomWidget
+      ];
+
+
+    if(
+      !confirm(
+        `确定删除「${item.name}」吗？`
+      )
+    ){
+      return;
+    }
+
+
+    customWidgets.splice(
+      editingCustomWidget,
+      1
+    );
+
+
+    saveCustomWidgets();
+
+
+    renderCustomWidgets();
+
+
+    $("customWidgetModal")
+      .classList.remove(
+        "show"
+      );
+
+  };
+
+
+function renderCustomWidgets(){
+
+  $("customWidgets")
+    .innerHTML="";
+
+
+  customWidgets
+    .filter(
+      item =>
+        item.enabled!==false
+    )
+    .forEach(
+      item=>{
+
+        const wrapper=
+          document.createElement(
+            "div"
+          );
+
+
+        wrapper.className=
+          "custom-widget";
+
+
+        const edit=
+          document.createElement(
+            "button"
+          );
+
+
+        edit.className=
+          "custom-widget-edit";
+
+
+        edit.textContent=
+          "✎";
+
+
+        edit.onclick=
+          ()=>{
+            openCustomWidgetEditor(
+              customWidgets
+                .indexOf(item)
+            );
+          };
+
+
+        wrapper.appendChild(
+          edit
+        );
+
+
+        const title=
+          document.createElement(
+            "div"
+          );
+
+
+        title.className=
+          "custom-widget-title";
+
+
+        title.textContent=
+          item.name;
+
+
+        wrapper.appendChild(
+          title
+        );
+
+
+        const content=
+          document.createElement(
+            "div"
+          );
+
+
+        content.className=
+          "custom-widget-content";
+
+
+        const frame=
+          document.createElement(
+            "iframe"
+          );
+
+
+        frame.style.width=
+          "100%";
+
+        frame.style.minHeight=
+          "65px";
+
+        frame.style.border=
+          "0";
+
+        frame.style.background=
+          "transparent";
+
+        frame.style.display=
+          "block";
+
+
+        frame.setAttribute(
+          "sandbox",
+          "allow-scripts allow-forms allow-popups"
+        );
+
+
+        frame.srcdoc=
+`
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<style>
+
+html,
+body{
+
+  margin:0;
+
+  padding:0;
+
+  width:100%;
+
+  background:transparent !important;
+
+  color:#fff;
+
+  font-family:
+    "Segoe UI",
+    "Microsoft YaHei",
+    sans-serif;
+
+}
+
+body{
+
+  overflow:hidden;
+
+}
+
+*{
+
+  box-sizing:border-box;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+${item.code}
+
+</body>
+
+</html>
+`;
+
+
+        frame.onload=
+          ()=>{
+
+            /*
+             * 给一点初始高度。
+             *
+             * sandbox iframe 无法安全读取
+             * 跨 origin 内容，因此这里不强制
+             * 读取内部高度。
+             */
+
+            frame.style.height=
+              "90px";
+
+          };
+
+
+        content.appendChild(
+          frame
+        );
+
+
+        wrapper.appendChild(
+          content
+        );
+
+
+        $("customWidgets")
+          .appendChild(
+            wrapper
+          );
+
+      }
+    );
+
+}
+
+
+renderCustomWidgets();
+
+
+/* =========================================================
+   内置网页浏览器
+========================================================= */
+
+const webView=
+  $("webView");
+
+
+const webTitle=
+  $("webTitle");
+
+
+const webUrl=
+  $("webUrl");
+
+
+const floatingDock=
+  $("floatingDock");
+
+
+const MAX_FLOATING=
+  5;
+
+
+/*
+ * url ->
+ *
+ * {
+ *   url,
+ *   title,
+ *   icon,
+ *   floating,
+ *   frame
+ * }
+ */
+
+const openPages=
+  new Map();
+
+
+let activeUrl=
+  null;
+
+
+function pageData(
+  url,
+  title,
+  iconUrl=""
+){
+
+  return{
+
+    url,
+
+    title:
+      title ||
+      new URL(url).hostname,
+
+    icon:
+      iconUrl ||
+      getSiteIcon(url),
+
+    floating:false,
+
+    frame:null
+
+  };
+
+}
+
+
+function ensureFrame(p){
+
+  if(p.frame){
+
+    return p.frame;
+
+  }
+
+
+  const frame=
+    document.createElement(
+      "iframe"
+    );
+
+
+  frame.title=
+    p.title;
+
+
+  frame.src=
+    p.url;
+
+
+  frame.dataset.url=
+    p.url;
+
+
+  frame.style.display=
+    "none";
+
+
+  frame.setAttribute(
+    "loading",
+    "eager"
+  );
+
+
+  /*
+   * iframe 被阻止时，
+   * 浏览器不一定会给 JS 一个明确错误。
+   *
+   * 所以提供外部打开按钮作为可靠方案。
+   */
+
+  frame.addEventListener(
+    "load",
+    ()=>{
+      toast(
+        p.title+
+        " 已加载"
+      );
+    }
+  );
+
+
+  webView.appendChild(
+    frame
+  );
+
+
+  p.frame=
+    frame;
+
+
+  return frame;
+
+}
+
+
+function activateFrame(p){
+
+  openPages.forEach(
+    x=>{
+
+      if(x.frame){
+
+        x.frame.style.display=
+          "none";
+
+      }
+
+    }
+  );
+
+
+  const frame=
+    ensureFrame(p);
+
+
+  frame.style.display=
+    "block";
+
+
+  return frame;
+
+}
+
+
+function showWindow(p){
+
+  activeUrl=
+    p.url;
+
+
+  p.floating=
+    false;
+
+
+  webView
+    .classList
+    .add("show");
+
+
+  activateFrame(p);
+
+
+  webTitle.textContent=
+    p.title;
+
+
+  webUrl.textContent=
+    p.url;
+
+
+  renderDock();
+
+}
+
+
+function openInternal(
+  url,
+  title="网页",
+  iconUrl=""
+){
+
+  let p=
+    openPages.get(url);
+
+
+  if(!p){
+
+    p=
+      pageData(
+        url,
+        title,
+        iconUrl
+      );
+
+
+    openPages.set(
+      url,
+      p
+    );
+
+
+    ensureFrame(p);
+
+  }else{
+
+    if(
+      title &&
+      title!=="网页"
+    ){
+
+      p.title=
+        title;
+
+    }
+
+
+    if(iconUrl){
+
+      p.icon=
+        iconUrl;
+
+    }
+
+  }
+
+
+  showWindow(p);
+
+}
+
+
+function floatCurrent(){
+
+  if(!activeUrl)
+    return;
+
+
+  const p=
+    openPages.get(
+      activeUrl
+    );
+
+
+  if(!p)
+    return;
+
+
+  const count=
+    [...openPages.values()]
+      .filter(
+        x=>x.floating
+      )
+      .length;
+
+
+  if(
+    !p.floating &&
+    count>=MAX_FLOATING
+  ){
+
+    toast(
+      `最多同时挂 ${MAX_FLOATING} 个悬浮球`
+    );
+
+    return;
+
+  }
+
+
+  p.floating=
+    true;
+
+
+  webView
+    .classList
+    .remove("show");
+
+
+  activeUrl=
+    null;
+
+
+  renderDock();
+
+
+  toast(
+    "网页已收起到悬浮球"
+  );
+
+}
+
+
+function restorePage(
+  url
+){
+
+  const p=
+    openPages.get(url);
+
+
+  if(p){
+
+    showWindow(p);
+
+  }
+
+}
+
+
+function closeCurrent(){
+
+  if(!activeUrl){
+
+    webView
+      .classList
+      .remove("show");
+
+    return;
+
+  }
+
+
+  const p=
+    openPages.get(
+      activeUrl
+    );
+
+
+  if(
+    p?.frame
+  ){
+
+    p.frame.remove();
+
+  }
+
+
+  openPages.delete(
+    activeUrl
+  );
+
+
+  webView
+    .classList
+    .remove("show");
+
+
+  activeUrl=
+    null;
+
+
+  renderDock();
+
+}
+
+
+/* =========================================================
+   外部打开
+========================================================= */
+
+function openExternalPage(){
+
+  if(!activeUrl)
+    return;
+
+
+  const p=
+    openPages.get(
+      activeUrl
+    );
+
+
+  if(!p)
+    return;
+
+
+  window.open(
+    p.url,
+    "_blank"
+  );
+
+}
+
+
+$("openExternal").onclick=
+  openExternalPage;
+
+
+$("openExternalError").onclick=
+  openExternalPage;
+
+
+/* =========================================================
+   返回主页
+========================================================= */
+
+function returnHome(){
+
+  webView
+    .classList
+    .remove("show");
+
+
+  activeUrl=
+    null;
+
+
+  renderDock();
+
+}
+
+
+$("backHome").onclick=
+  returnHome;
+
+
+$("closeWeb").onclick=
+  closeCurrent;
+
+
+$("floatWeb").onclick=
+  floatCurrent;
+
+
+/* =========================================================
+   侧边标签点击
+========================================================= */
+
+document.addEventListener(
+  "click",
+  e=>{
+
+    const link=
+      e.target.closest(
+        "a[data-internal]"
+      );
+
+
+    if(!link)
+      return;
+
+
+    e.preventDefault();
+
+
+    const custom=
+      links.find(
+        x=>
+          x.url===
+          link.href
+      );
+
+
+    openInternal(
+      link.href,
+      link.textContent.trim() ||
+      "网页",
+      custom?.iconUrl ||
+      ""
+    );
+
+  }
+);
+
+
+/* =========================================================
+   悬浮球
+========================================================= */
+
+function getFloatPosition(
+  url
+){
+
+  const key=
+    "luo_float_" +
+    encodeURIComponent(
+      url
+    );
+
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        key
+      ) ||
+      "null"
+    );
+
+  }catch(e){
+
+    return null;
+
+  }
+
+}
+
+
+function saveFloatPosition(
+  url,
+  x,
+  y
+){
+
+  const key=
+    "luo_float_" +
+    encodeURIComponent(
+      url
+    );
+
+
+  localStorage.setItem(
+
+    key,
+
+    JSON.stringify({
+      x,
+      y
+    })
+
+  );
+
+}
+
+
+function renderDock(){
+
+  floatingDock.innerHTML=
+    "";
+
+
+  openPages.forEach(
+    p=>{
+
+      if(!p.floating)
+        return;
+
+
+      const ball=
+        document.createElement(
+          "div"
+        );
+
+
+      ball.className=
+        "float-ball";
+
+
+      /*
+       * 恢复位置
+       */
+
+      const saved=
+        getFloatPosition(
+          p.url
+        );
+
+
+      let x=
+        saved?.x ??
+        window.innerWidth-80;
+
+
+      let y=
+        saved?.y ??
+        window.innerHeight-130;
+
+
+      x=Math.max(
+        4,
+        Math.min(
+          x,
+          window.innerWidth-61
+        )
+      );
+
+
+      y=Math.max(
+        4,
+        Math.min(
+          y,
+          window.innerHeight-61
+        )
+      );
+
+
+      ball.style.left=
+        x+"px";
+
+
+      ball.style.top=
+        y+"px";
+
+
+      /*
+       * 图标
+       */
+
+      if(p.icon){
+
+        const img=
+          document.createElement(
+            "img"
+          );
+
+
+        img.src=
+          p.icon;
+
+
+        img.alt="";
+
+
+        img.onerror=
+          ()=>{
+
+            img.remove();
+
+
+            const fallback=
+              document.createElement(
+                "span"
+              );
+
+
+            fallback.className=
+              "float-fallback";
+
+
+            fallback.textContent=
+              "🔗";
+
+
+            ball.appendChild(
+              fallback
+            );
+
+          };
+
+
+        ball.appendChild(
+          img
+        );
+
+      }else{
+
+        const fallback=
+          document.createElement(
+            "span"
+          );
+
+
+        fallback.className=
+          "float-fallback";
+
+
+        fallback.textContent=
+          "🔗";
+
+
+        ball.appendChild(
+          fallback
+        );
+
+      }
+
+
+      /*
+       * 拖动
+       */
+
+      let dragging=
+        false;
+
+      let moved=
+        false;
+
+      let startX=
+        0;
+
+      let startY=
+        0;
+
+      let startLeft=
+        0;
+
+      let startTop=
+        0;
+
+
+      ball.addEventListener(
+        "pointerdown",
+        e=>{
+
+          e.preventDefault();
+
+          ball.setPointerCapture(
+            e.pointerId
+          );
+
+
+          dragging=
+            true;
+
+          moved=
+            false;
+
+
+          startX=
+            e.clientX;
+
+          startY=
+            e.clientY;
+
+
+          startLeft=
+            parseFloat(
+              ball.style.left
+            );
+
+          startTop=
+            parseFloat(
+              ball.style.top
+            );
+
+        }
+      );
+
+
+      ball.addEventListener(
+        "pointermove",
+        e=>{
+
+          if(!dragging)
+            return;
+
+
+          const dx=
+            e.clientX-
+            startX;
+
+
+          const dy=
+            e.clientY-
+            startY;
+
+
+          if(
+            Math.abs(dx)>4 ||
+            Math.abs(dy)>4
+          ){
+
+            moved=
+              true;
+
+          }
+
+
+          let nx=
+            startLeft+
+            dx;
+
+
+          let ny=
+            startTop+
+            dy;
+
+
+          nx=Math.max(
+            4,
+            Math.min(
+              nx,
+              window.innerWidth-
+              ball.offsetWidth-
+              4
+            )
+          );
+
+
+          ny=Math.max(
+            4,
+            Math.min(
+              ny,
+              window.innerHeight-
+              ball.offsetHeight-
+              4
+            )
+          );
+
+
+          ball.style.left=
+            nx+"px";
+
+
+          ball.style.top=
+            ny+"px";
+
+        }
+      );
+
+
+      ball.addEventListener(
+        "pointerup",
+        ()=>{
+          
+          if(!dragging)
+            return;
+
+
+          dragging=
+            false;
+
+
+          const nx=
+            parseFloat(
+              ball.style.left
+            );
+
+
+          const ny=
+            parseFloat(
+              ball.style.top
+            );
+
+
+          saveFloatPosition(
+            p.url,
+            nx,
+            ny
+          );
+
+
+          if(!moved){
+
+            restorePage(
+              p.url
+            );
+
+          }
+
+        }
+      );
+
+
+      floatingDock.appendChild(
+        ball
+      );
+
+    }
+  );
+
+}
+
+
+renderDock();
+
+
+/* =========================================================
+   网页窗口拖动
+========================================================= */
+
+(function(){
+
+  const toolbar=
+    document.querySelector(
+      ".web-toolbar"
+    );
+
+
+  let dragging=
+    false;
+
+
+  let startX=0;
+
+  let startY=0;
+
+  let startLeft=0;
+
+  let startTop=0;
+
+
+  toolbar.addEventListener(
+    "pointerdown",
+    e=>{
+
+      if(
+        e.target.closest(
+          "button"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      dragging=
+        true;
+
+
+      toolbar.setPointerCapture(
+        e.pointerId
+      );
+
+
+      const r=
+        webView.getBoundingClientRect();
+
+
+      startX=
+        e.clientX;
+
+
+      startY=
+        e.clientY;
+
+
+      startLeft=
+        r.left;
+
+
+      startTop=
+        r.top;
+
+
+      webView.style.left=
+        r.left+"px";
+
+
+      webView.style.top=
+        r.top+"px";
+
+    }
+  );
+
+
+  toolbar.addEventListener(
+    "pointermove",
+    e=>{
+
+      if(!dragging)
+        return;
+
+
+      let x=
+        startLeft+
+        (
+          e.clientX-
+          startX
+        );
+
+
+      let y=
+        startTop+
+        (
+          e.clientY-
+          startY
+        );
+
+
+      const maxX=
+        Math.max(
+          0,
+          window.innerWidth-
+          webView.offsetWidth
+        );
+
+
+      const maxY=
+        Math.max(
+          0,
+          window.innerHeight-
+          webView.offsetHeight
+        );
+
+
+      x=Math.max(
+        0,
+        Math.min(
+          x,
+          maxX
+        )
+      );
+
+
+      y=Math.max(
+        0,
+        Math.min(
+          y,
+          maxY
+        )
+      );
+
+
+      webView.style.left=
+        x+"px";
+
+
+      webView.style.top=
+        y+"px";
+
+    }
+  );
+
+
+  toolbar.addEventListener(
+    "pointerup",
+    ()=>{
+      dragging=false;
+    }
+  );
+
+})();
+
+
+/* =========================================================
+   搜索
+========================================================= */
+
+$("searchForm")
+  .addEventListener(
+    "submit",
+    e=>{
+
+      e.preventDefault();
+
+
+      const q=
+        $("searchInput")
+          .value
+          .trim();
+
+
+      if(!q)
+        return;
+
+
+      location.href=
+        "https://www.bing.com/search?q="+
+        encodeURIComponent(q);
+
+    }
+  );
+
+
+/* =========================================================
+   Modal 点击外部关闭
+========================================================= */
+
+[
+  "modal",
+  "backgroundModal",
+  "widgetModal",
+  "customWidgetModal"
+]
+.forEach(
+  id=>{
+
+    $(id).addEventListener(
+      "click",
+      e=>{
+
+        if(
+          e.target===
+          $(id)
+        ){
+
+          $(id)
+            .classList
+            .remove(
+              "show"
+            );
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   窗口大小改变
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  ()=>{
+
+    renderDock();
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
